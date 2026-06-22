@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 public class DetailNewsActivity extends Activity {
-    private TextView txtDetailJudul, txtDetailKategoriTanggal, txtDetailIsi;
+    private TextView txtDetailJudul, txtDetailKategoriTanggal, txtDetailPenulis, txtDetailIsi;
     private ImageView imgDetailBerita;
     private Button btnShare;
     private DatabaseHelper dbHelper;
@@ -25,6 +25,7 @@ public class DetailNewsActivity extends Activity {
 
         txtDetailJudul = findViewById(R.id.txtDetailJudul);
         txtDetailKategoriTanggal = findViewById(R.id.txtDetailKategoriTanggal);
+        txtDetailPenulis = findViewById(R.id.txtDetailPenulis);
         txtDetailIsi = findViewById(R.id.txtDetailIsi);
         imgDetailBerita = findViewById(R.id.imgDetailBerita);
         btnShare = findViewById(R.id.btnShare);
@@ -47,6 +48,7 @@ public class DetailNewsActivity extends Activity {
         if (currentNews != null) {
             txtDetailJudul.setText(currentNews.getJudul());
             txtDetailKategoriTanggal.setText(currentNews.getKategori() + " | " + currentNews.getTanggal());
+            txtDetailPenulis.setText("Penulis: " + currentNews.getPenulis());
             txtDetailIsi.setText(currentNews.getIsi());
 
             if (currentNews.getGambar() != null && !currentNews.getGambar().isEmpty()) {

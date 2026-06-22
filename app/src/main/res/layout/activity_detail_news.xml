@@ -28,6 +28,16 @@
             android:textColor="#757575"
             android:textSize="13sp" />
 
+        <TextView
+            android:id="@+id/txtDetailPenulis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Penulis: "
+            android:textColor="#FF9800"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
         <Button
             android:id="@+id/btnShare"
             style="?android:attr/buttonStyleSmall"

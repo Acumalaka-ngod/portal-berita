@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Admin Login"
-        android:textSize="24sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#1A237E"
         android:layout_marginBottom="32dp" />

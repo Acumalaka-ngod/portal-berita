@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">portal_berita</string>
+    <string name="admin">Admin</string>
+    <string name="cari">Cari</string>
 </resources>

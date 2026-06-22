@@ -10,12 +10,13 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "portal_berita.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     
     public static final String TABLE_BERITA = "berita";
     public static final String COL_ID = "id";
     public static final String COL_JUDUL = "judul";
     public static final String COL_KATEGORI = "kategori";
+    public static final String COL_PENULIS = "penulis";
     public static final String COL_ISI = "isi";
     public static final String COL_TANGGAL = "tanggal";
     public static final String COL_GAMBAR = "gambar";
@@ -35,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_JUDUL + " TEXT NOT NULL, " +
                 COL_KATEGORI + " TEXT NOT NULL, " +
+                COL_PENULIS + " TEXT NOT NULL, " +
                 COL_ISI + " TEXT NOT NULL, " +
                 COL_TANGGAL + " TEXT NOT NULL, " +
                 COL_GAMBAR + " TEXT)";
@@ -50,9 +52,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_ADMIN + " (" + COL_USERNAME + ", " + COL_PASSWORD + ") VALUES ('admin', 'admin123')");
 
         // Initial sample
-        db.execSQL("INSERT INTO " + TABLE_BERITA + " (" + COL_JUDUL + ", " + COL_KATEGORI + ", " + COL_ISI + ", " +
-                COL_TANGGAL + ", " + COL_GAMBAR + ") VALUES ('Kampus Mengadakan Seminar Teknologi', " +
-                "'Pendidikan', 'Universitas mengadakan seminar teknologi untuk meningkatkan literasi digital mahasiswa.', '01-06-2026', '')");
+        db.execSQL("INSERT INTO " + TABLE_BERITA + " (" + COL_JUDUL + ", " + COL_KATEGORI + ", " + COL_PENULIS + ", " +
+                COL_ISI + ", " + COL_TANGGAL + ", " + COL_GAMBAR + ") VALUES ('Kampus Mengadakan Seminar Teknologi', " +
+                "'Pendidikan', 'Admin', 'Universitas mengadakan seminar teknologi untuk meningkatkan literasi digital mahasiswa.', '01-06-2026', '')");
     }
 
     @Override
@@ -66,13 +68,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(createAdminTable);
             db.execSQL("INSERT INTO " + TABLE_ADMIN + " (" + COL_USERNAME + ", " + COL_PASSWORD + ") VALUES ('admin', 'admin123')");
         }
+        if (oldVersion < 3) {
+            db.execSQL("ALTER TABLE " + TABLE_BERITA + " ADD COLUMN " + COL_PENULIS + " TEXT NOT NULL DEFAULT ''");
+        }
     }
 
-    public boolean insertBerita(String judul, String kategori, String isi, String tanggal, String gambar) {
+    public boolean insertBerita(String judul, String kategori, String penulis, String isi, String tanggal, String gambar) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_JUDUL, judul);
         values.put(COL_KATEGORI, kategori);
+        values.put(COL_PENULIS, penulis);
         values.put(COL_ISI, isi);
         values.put(COL_TANGGAL, tanggal);
         values.put(COL_GAMBAR, gambar);
@@ -90,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_JUDUL)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_KATEGORI)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COL_PENULIS)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_ISI)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_TANGGAL)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_GAMBAR))
@@ -111,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_JUDUL)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_KATEGORI)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COL_PENULIS)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_ISI)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_TANGGAL)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_GAMBAR))
@@ -132,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_JUDUL)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_KATEGORI)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COL_PENULIS)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_ISI)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_TANGGAL)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_GAMBAR))
@@ -151,6 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_JUDUL)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_KATEGORI)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COL_PENULIS)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_ISI)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_TANGGAL)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_GAMBAR))
@@ -160,11 +170,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return news;
     }
 
-    public boolean updateBerita(int id, String judul, String kategori, String isi, String tanggal, String gambar) {
+    public boolean updateBerita(int id, String judul, String kategori, String penulis, String isi, String tanggal, String gambar) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_JUDUL, judul);
         values.put(COL_KATEGORI, kategori);
+        values.put(COL_PENULIS, penulis);
         values.put(COL_ISI, isi);
         values.put(COL_TANGGAL, tanggal);
         values.put(COL_GAMBAR, gambar);

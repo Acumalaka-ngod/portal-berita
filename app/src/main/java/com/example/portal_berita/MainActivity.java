@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,13 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerBerita;
-    private Button btnTambah, btnSearch, btnCatAll, btnCatPolitik, btnCatOlahraga, btnCatTeknologi, btnCatHiburan;
+    private Button btnTambah, btnSearch, btnTentang;
     private EditText editSearch;
     private ImageView imgAdmin;
+    private Spinner spinnerKategori;
     private DatabaseHelper dbHelper;
     private NewsAdapter adapter;
     private ArrayList<News> newsList;
     private boolean isAdmin = false;
+
+    private static final String[] KATEGORI_FILTER = {"Semua", "Pendidikan", "Politik", "Olahraga", "Teknologi", "Hiburan"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +40,10 @@ public class MainActivity extends Activity {
         recyclerBerita = findViewById(R.id.recyclerBerita);
         btnTambah = findViewById(R.id.btnTambah);
         btnSearch = findViewById(R.id.btnSearch);
+        btnTentang = findViewById(R.id.btnTentang);
         editSearch = findViewById(R.id.editSearch);
         imgAdmin = findViewById(R.id.imgAdmin);
-
-        btnCatAll = findViewById(R.id.btnCatAll);
-        btnCatPolitik = findViewById(R.id.btnCatPolitik);
-        btnCatOlahraga = findViewById(R.id.btnCatOlahraga);
-        btnCatTeknologi = findViewById(R.id.btnCatTeknologi);
-        btnCatHiburan = findViewById(R.id.btnCatHiburan);
+        spinnerKategori = findViewById(R.id.spinnerKategori);
 
         dbHelper = new DatabaseHelper(this);
         newsList = new ArrayList<>();
@@ -68,6 +70,22 @@ public class MainActivity extends Activity {
         recyclerBerita.setLayoutManager(new LinearLayoutManager(this));
         recyclerBerita.setAdapter(adapter);
 
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, KATEGORI_FILTER);
+        spinnerKategori.setAdapter(spinnerAdapter);
+        spinnerKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = KATEGORI_FILTER[position];
+                if (selected.equals("Semua")) {
+                    loadData();
+                } else {
+                    filterCategory(selected);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
         imgAdmin.setOnClickListener(v -> {
             if (isAdmin) {
                 showLogoutDialog();
@@ -83,6 +101,10 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "Silakan login sebagai admin untuk menambah berita", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
+        });
+
+        btnTentang.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
         });
 
         btnSearch.setOnClickListener(v -> {
@@ -104,12 +126,6 @@ public class MainActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        btnCatAll.setOnClickListener(v -> loadData());
-        btnCatPolitik.setOnClickListener(v -> filterCategory("Politik"));
-        btnCatOlahraga.setOnClickListener(v -> filterCategory("Olahraga"));
-        btnCatTeknologi.setOnClickListener(v -> filterCategory("Teknologi"));
-        btnCatHiburan.setOnClickListener(v -> filterCategory("Hiburan"));
 
         loadData();
     }

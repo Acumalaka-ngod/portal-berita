@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+
         <TextView
             android:id="@+id/txtFormTitle"
             android:layout_width="match_parent"
@@ -18,6 +19,7 @@
             android:textColor="#1A237E"
             android:gravity="center"
             android:padding="8dp" />
+
         <EditText
             android:id="@+id/etJudul"
             android:layout_width="match_parent"
@@ -25,13 +27,21 @@
             android:hint="Judul Berita"
             android:layout_marginTop="16dp"
             android:inputType="textCapSentences" />
-        <EditText
-            android:id="@+id/etKategori"
+
+        <Spinner
+            android:id="@+id/spinnerKategori"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Kategori (Politik, Olahraga, dll)"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/etPenulis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Penulis"
             android:layout_marginTop="10dp"
             android:inputType="textCapWords" />
+
         <EditText
             android:id="@+id/etGambar"
             android:layout_width="match_parent"
@@ -39,14 +49,26 @@
             android:hint="URL Gambar Berita"
             android:layout_marginTop="10dp"
             android:inputType="textUri" />
+
+        <TextView
+            android:id="@+id/txtCharCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="0 karakter (min. 50)"
+            android:textSize="12sp"
+            android:textColor="#757575"
+            android:gravity="end" />
+
         <EditText
             android:id="@+id/etIsi"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:hint="Isi Berita"
+            android:hint="Isi Berita (min. 50 karakter)"
             android:gravity="top"
             android:inputType="textMultiLine"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="4dp" />
+
         <Button
             android:id="@+id/btnSimpan"
             android:layout_width="match_parent"

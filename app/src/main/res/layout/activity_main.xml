@@ -28,8 +28,8 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="4dp"
             android:src="@android:drawable/ic_lock_lock"
-            android:contentDescription="Admin"
-            android:alpha="0.6f"
+            android:contentDescription="@string/admin"
+            android:alpha="1.0"
             android:clickable="true"
             android:focusable="true" />
     </RelativeLayout>
@@ -55,61 +55,15 @@
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cari"
+            android:text="@string/cari"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
-    <HorizontalScrollView
+    <Spinner
+        android:id="@+id/spinnerKategori"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnCatAll"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Semua" />
-
-            <Button
-                android:id="@+id/btnCatPolitik"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Politik"
-                android:layout_marginStart="4dp" />
-
-            <Button
-                android:id="@+id/btnCatOlahraga"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Olahraga"
-                android:layout_marginStart="4dp" />
-
-            <Button
-                android:id="@+id/btnCatTeknologi"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Teknologi"
-                android:layout_marginStart="4dp" />
-
-            <Button
-                android:id="@+id/btnCatHiburan"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hiburan"
-                android:layout_marginStart="4dp" />
-        </LinearLayout>
-    </HorizontalScrollView>
+        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/btnTambah"
@@ -118,6 +72,14 @@
         android:text="Tambah Berita"
         android:layout_marginTop="8dp"
         android:backgroundTint="#FF9800" />
+
+    <Button
+        android:id="@+id/btnTentang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tentang Aplikasi"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#607D8B" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerBerita"
