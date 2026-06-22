@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txtDetailJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Judul Berita"
+            android:textColor="#212121"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDetailKategoriTanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Kategori | Tanggal"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnShare"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Bagikan Berita"
+            android:textColor="#FFFFFF" />
+
+        <!-- Gambar diletakkan sebelum isi berita -->
+        <ImageView
+            android:id="@+id/imgDetailBerita"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@android:color/darker_gray"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtDetailIsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Isi berita..."
+            android:textColor="#333333"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

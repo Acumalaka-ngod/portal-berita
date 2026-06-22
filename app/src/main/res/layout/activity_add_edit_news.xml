@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FA">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/txtFormTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambah Berita"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#1A237E"
+            android:gravity="center"
+            android:padding="8dp" />
+        <EditText
+            android:id="@+id/etJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Judul Berita"
+            android:layout_marginTop="16dp"
+            android:inputType="textCapSentences" />
+        <EditText
+            android:id="@+id/etKategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kategori (Politik, Olahraga, dll)"
+            android:layout_marginTop="10dp"
+            android:inputType="textCapWords" />
+        <EditText
+            android:id="@+id/etGambar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL Gambar Berita"
+            android:layout_marginTop="10dp"
+            android:inputType="textUri" />
+        <EditText
+            android:id="@+id/etIsi"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:hint="Isi Berita"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="10dp" />
+        <Button
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simpan"
+            android:layout_marginTop="18dp" />
+    </LinearLayout>
+</ScrollView>

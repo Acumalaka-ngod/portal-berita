@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F7FA">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Portal Berita"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#1A237E"
+        android:gravity="center"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Cari berita..."
+            android:background="@android:drawable/editbox_background"
+            android:padding="10dp"
+            android:maxLines="1"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cari"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCatAll"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Semua" />
+
+            <Button
+                android:id="@+id/btnCatPolitik"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Politik"
+                android:layout_marginStart="4dp" />
+
+            <Button
+                android:id="@+id/btnCatOlahraga"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Olahraga"
+                android:layout_marginStart="4dp" />
+
+            <Button
+                android:id="@+id/btnCatTeknologi"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teknologi"
+                android:layout_marginStart="4dp" />
+
+            <Button
+                android:id="@+id/btnCatHiburan"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hiburan"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/btnTambah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kelola Berita (Admin)"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FF9800" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerBerita"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1" />
+</LinearLayout>
