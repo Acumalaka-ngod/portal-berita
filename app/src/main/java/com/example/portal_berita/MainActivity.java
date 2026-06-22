@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,9 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerBerita;
-    private Button btnTambah, btnSearch, btnTentang;
+    private Button btnTambah, btnSearch;
     private EditText editSearch;
     private ImageView imgAdmin;
+    private TextView txtTentang;
     private Spinner spinnerKategori;
     private DatabaseHelper dbHelper;
     private NewsAdapter adapter;
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
         recyclerBerita = findViewById(R.id.recyclerBerita);
         btnTambah = findViewById(R.id.btnTambah);
         btnSearch = findViewById(R.id.btnSearch);
-        btnTentang = findViewById(R.id.btnTentang);
+        txtTentang = findViewById(R.id.txtTentang);
         editSearch = findViewById(R.id.editSearch);
         imgAdmin = findViewById(R.id.imgAdmin);
         spinnerKategori = findViewById(R.id.spinnerKategori);
@@ -103,7 +105,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        btnTentang.setOnClickListener(v -> {
+        txtTentang.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, AboutActivity.class));
         });
 
