@@ -3,12 +3,14 @@ package com.example.portal_berita;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,9 +20,11 @@ public class MainActivity extends Activity {
     private RecyclerView recyclerBerita;
     private Button btnTambah, btnSearch, btnCatAll, btnCatPolitik, btnCatOlahraga, btnCatTeknologi, btnCatHiburan;
     private EditText editSearch;
+    private ImageView imgAdmin;
     private DatabaseHelper dbHelper;
     private NewsAdapter adapter;
     private ArrayList<News> newsList;
+    private boolean isAdmin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,8 @@ public class MainActivity extends Activity {
         btnTambah = findViewById(R.id.btnTambah);
         btnSearch = findViewById(R.id.btnSearch);
         editSearch = findViewById(R.id.editSearch);
-        
+        imgAdmin = findViewById(R.id.imgAdmin);
+
         btnCatAll = findViewById(R.id.btnCatAll);
         btnCatPolitik = findViewById(R.id.btnCatPolitik);
         btnCatOlahraga = findViewById(R.id.btnCatOlahraga);
@@ -40,7 +45,7 @@ public class MainActivity extends Activity {
 
         dbHelper = new DatabaseHelper(this);
         newsList = new ArrayList<>();
-        
+
         adapter = new NewsAdapter(newsList, new NewsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(News news) {
@@ -51,18 +56,33 @@ public class MainActivity extends Activity {
 
             @Override
             public void onItemLongClick(News news) {
-                // Feature: Admin login check before editing/deleting can be added here
-                showOptionDialog(news);
+                if (isAdmin) {
+                    showOptionDialog(news);
+                } else {
+                    Toast.makeText(MainActivity.this, "Silakan login sebagai admin untuk mengelola berita", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
             }
         });
 
         recyclerBerita.setLayoutManager(new LinearLayoutManager(this));
         recyclerBerita.setAdapter(adapter);
 
+        imgAdmin.setOnClickListener(v -> {
+            if (isAdmin) {
+                showLogoutDialog();
+            } else {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+
         btnTambah.setOnClickListener(v -> {
-            // Requirement: Add admin login for managing news
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            if (isAdmin) {
+                startActivity(new Intent(MainActivity.this, AddEditNewsActivity.class));
+            } else {
+                Toast.makeText(this, "Silakan login sebagai admin untuk menambah berita", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
         });
 
         btnSearch.setOnClickListener(v -> {
@@ -71,7 +91,6 @@ public class MainActivity extends Activity {
             adapter.setData(newsList);
         });
 
-        // Real-time search
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -86,7 +105,6 @@ public class MainActivity extends Activity {
             public void afterTextChanged(Editable s) {}
         });
 
-        // Category Filter logic
         btnCatAll.setOnClickListener(v -> loadData());
         btnCatPolitik.setOnClickListener(v -> filterCategory("Politik"));
         btnCatOlahraga.setOnClickListener(v -> filterCategory("Olahraga"));
@@ -99,7 +117,41 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        checkAdminSession();
         loadData();
+    }
+
+    private void checkAdminSession() {
+        SharedPreferences prefs = getSharedPreferences("admin_session", MODE_PRIVATE);
+        isAdmin = prefs.getBoolean("isAdmin", false);
+        updateAdminUI();
+    }
+
+    private void updateAdminUI() {
+        if (isAdmin) {
+            btnTambah.setVisibility(View.VISIBLE);
+            imgAdmin.setImageResource(android.R.drawable.ic_menu_manage);
+            imgAdmin.setAlpha(1.0f);
+        } else {
+            btnTambah.setVisibility(View.GONE);
+            imgAdmin.setImageResource(android.R.drawable.ic_lock_lock);
+            imgAdmin.setAlpha(0.6f);
+        }
+    }
+
+    private void showLogoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Admin")
+                .setMessage("Anda sedang login sebagai admin. Ingin logout?")
+                .setPositiveButton("Logout", (dialog, which) -> {
+                    SharedPreferences prefs = getSharedPreferences("admin_session", MODE_PRIVATE);
+                    prefs.edit().putBoolean("isAdmin", false).apply();
+                    isAdmin = false;
+                    updateAdminUI();
+                    Toast.makeText(this, "Berhasil logout", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Batal", null)
+                .show();
     }
 
     private void loadData() {
@@ -117,7 +169,6 @@ public class MainActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pilih Aksi");
         builder.setItems(options, (dialog, which) -> {
-            // Normally you would check if user is logged in as admin here
             if (which == 0) {
                 Intent intent = new Intent(MainActivity.this, AddEditNewsActivity.class);
                 intent.putExtra("id", news.getId());

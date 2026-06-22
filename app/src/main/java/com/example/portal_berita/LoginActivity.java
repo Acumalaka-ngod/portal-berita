@@ -1,6 +1,7 @@
 package com.example.portal_berita;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +28,12 @@ public class LoginActivity extends AppCompatActivity {
             String pass = editPassword.getText().toString();
 
             if (dbHelper.checkAdminLogin(user, pass)) {
+                SharedPreferences prefs = getSharedPreferences("admin_session", MODE_PRIVATE);
+                prefs.edit().putBoolean("isAdmin", true).apply();
+
                 Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, AddEditNewsActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             } else {
