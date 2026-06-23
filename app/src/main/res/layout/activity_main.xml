@@ -40,7 +40,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="4dp"
-            android:src="@android:drawable/ic_lock_lock"
+            android:src="@drawable/user"
             android:contentDescription="@string/admin"
             android:alpha="1.0"
             android:clickable="true"
