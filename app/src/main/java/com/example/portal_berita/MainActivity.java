@@ -137,12 +137,13 @@ public class MainActivity extends Activity {
     private void updateAdminUI() {
         if (isAdmin) {
             btnTambah.setVisibility(View.VISIBLE);
+            imgAdmin.setImageResource(android.R.drawable.ic_menu_manage);
             imgAdmin.setAlpha(1.0f);
         } else {
             btnTambah.setVisibility(View.GONE);
+            imgAdmin.setImageResource(R.drawable.user);
             imgAdmin.setAlpha(0.6f);
         }
-    }
     }
 
     private void showLogoutDialog() {
