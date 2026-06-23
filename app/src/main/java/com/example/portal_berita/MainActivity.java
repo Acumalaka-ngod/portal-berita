@@ -8,12 +8,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -22,17 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerBerita;
-    private Button btnTambah, btnSearch;
+    private Button btnTambah, btnSearch, btnCatAll, btnCatPolitik, btnCatOlahraga, btnCatTeknologi, btnCatHiburan;
     private EditText editSearch;
     private ImageView imgAdmin;
     private TextView txtTentang;
-    private Spinner spinnerKategori;
     private DatabaseHelper dbHelper;
     private NewsAdapter adapter;
     private ArrayList<News> newsList;
     private boolean isAdmin = false;
-
-    private static final String[] KATEGORI_FILTER = {"Semua", "Pendidikan", "Politik", "Olahraga", "Teknologi", "Hiburan"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +39,12 @@ public class MainActivity extends Activity {
         txtTentang = findViewById(R.id.txtTentang);
         editSearch = findViewById(R.id.editSearch);
         imgAdmin = findViewById(R.id.imgAdmin);
-        spinnerKategori = findViewById(R.id.spinnerKategori);
+
+        btnCatAll = findViewById(R.id.btnCatAll);
+        btnCatPolitik = findViewById(R.id.btnCatPolitik);
+        btnCatOlahraga = findViewById(R.id.btnCatOlahraga);
+        btnCatTeknologi = findViewById(R.id.btnCatTeknologi);
+        btnCatHiburan = findViewById(R.id.btnCatHiburan);
 
         dbHelper = new DatabaseHelper(this);
         newsList = new ArrayList<>();
@@ -72,21 +71,11 @@ public class MainActivity extends Activity {
         recyclerBerita.setLayoutManager(new LinearLayoutManager(this));
         recyclerBerita.setAdapter(adapter);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, KATEGORI_FILTER);
-        spinnerKategori.setAdapter(spinnerAdapter);
-        spinnerKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = KATEGORI_FILTER[position];
-                if (selected.equals("Semua")) {
-                    loadData();
-                } else {
-                    filterCategory(selected);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        btnCatAll.setOnClickListener(v -> loadData());
+        btnCatPolitik.setOnClickListener(v -> filterCategory("Politik"));
+        btnCatOlahraga.setOnClickListener(v -> filterCategory("Olahraga"));
+        btnCatTeknologi.setOnClickListener(v -> filterCategory("Teknologi"));
+        btnCatHiburan.setOnClickListener(v -> filterCategory("Hiburan"));
 
         imgAdmin.setOnClickListener(v -> {
             if (isAdmin) {
