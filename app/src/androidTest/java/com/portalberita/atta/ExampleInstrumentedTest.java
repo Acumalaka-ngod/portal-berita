@@ -1,4 +1,4 @@
-package com.example.portal_berita;
+package com.portalberita.atta;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.portal_berita", appContext.getPackageName());
+        assertEquals("com.portalberita.atta", appContext.getPackageName());
     }
 }

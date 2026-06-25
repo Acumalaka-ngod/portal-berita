@@ -1,4 +1,4 @@
-package com.example.portal_berita;
+package com.portalberita.atta;
 
 import android.app.Activity;
 import android.app.AlertDialog;

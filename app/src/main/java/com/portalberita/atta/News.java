@@ -1,4 +1,4 @@
-package com.example.portal_berita;
+package com.portalberita.atta;
 
 import java.io.Serializable;
 

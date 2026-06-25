@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.portal_berita"
+    namespace = "com.portalberita.atta"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.portal_berita"
+        applicationId = "com.portalberita.atta"
         minSdk = 23
         targetSdk = 36
         versionCode = 1
